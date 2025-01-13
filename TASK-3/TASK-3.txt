@@ -1,0 +1,122 @@
+mysql> CREATE TABLE STUDENT(
+    -> student_id int AUTO_INCREMENT PRIMARY KEY,
+    -> name char(10),
+    -> math_score int,
+    -> science_score int,
+    -> english_score int,
+    -> total_score int);
+Query OK, 0 rows affected (0.71 sec)
+
+mysql> DESC STUDENT;
++---------------+----------+------+-----+---------+----------------+
+| Field         | Type     | Null | Key | Default | Extra          |
++---------------+----------+------+-----+---------+----------------+
+| student_id    | int      | NO   | PRI | NULL    | auto_increment |
+| name          | char(10) | YES  |     | NULL    |                |
+| math_score    | int      | YES  |     | NULL    |                |
+| science_score | int      | YES  |     | NULL    |                |
+| english_score | int      | YES  |     | NULL    |                |
+| total_score   | int      | YES  |     | NULL    |                |
++---------------+----------+------+-----+---------+----------------+
+6 rows in set (0.58 sec)
+
+mysql> insert into student values(1,'VIDYA',59,78,97,234);
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into student values(2,'ANKITA',79,68,89,236);
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into student values(3,'AYUSH',89,58,79,226);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(4,'HIMANSHU',69,74,66,209);
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into student values(5,'SAURABH',58,44,86,188);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(6,'DEV KUMAR',88,44,96,228);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into student values(7,'M KUMAR',98,64,69,231);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into student values(8,'J KUMAR',68,64,97,229);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into student values(9,'ANKUSH',80,64,79,223);
+Query OK, 1 row affected (0.05 sec)
+
+mysql> insert into student values(10,'NANKHU',40,54,39,133);
+Query OK, 1 row affected (0.08 sec)
+
+
+mysql> SELECT * FROM STUDENT;;
++------------+-----------+------------+---------------+---------------+-------------+
+| student_id | name      | math_score | science_score | english_score | total_score |
++------------+-----------+------------+---------------+---------------+-------------+
+|          1 | VIDYA     |         59 |            78 |            97 |         234 |
+|          2 | ANKITA    |         79 |            68 |            89 |         236 |
+|          3 | AYUSH     |         89 |            58 |            79 |         226 |
+|          4 | HIMANSHU  |         69 |            74 |            66 |         209 |
+|          5 | SAURABH   |         58 |            44 |            86 |         188 |
+|          6 | DEV KUMAR |         88 |            44 |            96 |         228 |
+|          7 | M KUMAR   |         98 |            64 |            69 |         231 |
+|          8 | J KUMAR   |         68 |            64 |            97 |         229 |
+|          9 | ANKUSH    |         80 |            64 |            79 |         223 |
+|         10 | NANKHU    |         40 |            54 |            39 |         133 |
++------------+-----------+------------+---------------+---------------+-------------+
+10 rows in set (0.03 sec)
+
+Q.1)
+
+mysql> SELECT STUDENT_ID,NAME,
+    -> (MATH_SCORE+SCIENCE_SCORE+ENGLISH_SCORE) AS TOTAL_SCORE
+    -> FROM STUDENT
+    -> ORDER BY TOTAL_SCORE DESC
+    -> LIMIT 5;
+
+O/P:
++------------+-----------+-------------+
+| STUDENT_ID | NAME      | TOTAL_SCORE |
++------------+-----------+-------------+
+|          2 | ANKITA    |         236 |
+|          1 | VIDYA     |         234 |
+|          7 | M KUMAR   |         231 |
+|          8 | J KUMAR   |         229 |
+|          6 | DEV KUMAR |         228 |
++------------+-----------+-------------+
+5 rows in set (0.01 sec)
+
+Q.2)
+
+mysql> SELECT AVG(MATH_SCORE) AS AVERAGE_MATHS_SCORE
+    -> FROM STUDENT
+    -> WHERE MATH_SCORE>70;
++---------------------+
+| AVERAGE_MATHS_SCORE |
++---------------------+
+|             86.8000 |
++---------------------+
+1 row in set (0.13 sec)
+
+mysql> SELECT AVG(TOTAL_SCORE) AS AVERAGE_TOTAL_SCORE
+    -> FROM STUDENT
+    -> ;
++---------------------+
+| AVERAGE_TOTAL_SCORE |
++---------------------+
+|            213.7000 |
++---------------------+
+1 row in set (0.00 sec)
+
+Q/3:
+mysql> SELECT AVG(MATH_SCORE) AS SECOND_HIGHEST_SCORE
+    -> FROM STUDENT
+    -> WHERE MATH_SCORE<(SELECT MAX(MATH_SCORE) FROM STUDENT);
++----------------------+
+| SECOND_HIGHEST_SCORE |
++----------------------+
+|              70.0000 |
++----------------------+
+1 row in set (0.07 sec)
