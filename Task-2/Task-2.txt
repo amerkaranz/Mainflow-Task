@@ -1,0 +1,104 @@
+
+mysql> ALTER TABLE STUDENTS
+    -> ADD Email varchar(20);
+Query OK, 0 rows affected (2.70 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+Select * from students;
+
+mysql> create table Courses(
+    -> course_id int(10) PRIMARY KEY,
+    -> course_name varchar(20),
+    -> course_description varchar(20));
+Query OK, 0 rows affected, 1 warning (1.47 sec)
+
+mysql> insert into courses values(1001,'Python','N/A');
+Query OK, 1 row affected (0.44 sec)
+
+mysql> insert into courses values(1002,'Java','N/A');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> insert into courses values(1003,'IoT','N/A');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into courses values(1004,'C++','N/A');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into courses values(1005,'C','N/A');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> select * from COURSES;
+
+mysql> create table Enrolments(
+    -> enrolment_id int(10) PRIMARY KEY,
+    -> studentid int,
+    -> FOREIGN KEY(studentid) references students(studentid),
+    -> course_id int,
+    -> FOREIGN KEY(course_id) references courses(course_id),
+    -> enrolment_date varchar(30));
+Query OK, 0 rows affected, 1 warning (1.31 sec)
+
+mysql> desc Enrolments;
+mysql> insert into enrolments values(2,102,1001,'11-10-2024');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into enrolments values(3,103,1005,'21-11-2024');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into enrolments values(4,104,1002,'29-11-2024');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> insert into enrolments values(5,101,1002,'09-11-2024');
+Query OK, 1 row affected (0.06 sec)
+
+mysql> insert into enrolments values(6,106,1004,'02-12-2024');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> insert into enrolments values(7,109,1001,'12-12-2024');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into enrolments values(8,110,1003,'16-12-2024');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> insert into enrolments values(9,110,1005,'16-12-2024');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into enrolments values(10,110,1001,'16-12-2024');
+Query OK, 1 row affected (0.02 sec)
+
+mysql> select * from Enrolments;
+
+
+Q1.
+mysql> select s.name,c.course_name from enrolments e
+    -> JOIN
+    -> students s
+    -> ON
+    -> e.studentid=s.studentid
+    -> JOIN
+    -> courses c
+    -> ON
+    -> e.course_id=c.course_id;
+
+Q2.
+mysql> Select c.course_name,
+    -> Count(e.enrolment_id)
+    -> from courses as c
+    -> LEFT JOIN
+    -> Enrolments e on c.course_id=e.course_id
+    -> GROUP BY
+    -> c.course_name;
+
+Q3.
+mysql> select s.name,
+    -> count(e.course_id) as NoofCourses
+    -> from enrolments as e
+    -> JOIN
+    -> Students s on e.studentid=s.studentid
+    -> GROUP BY s.studentid
+    -> HAVING NoofCourses > 1;
+
+Q4.
+mysql> Select course_name from courses  AS c
+    -> LEFT JOIN
+    -> Enrolments e on c.course_id=e.course_id
+    -> WHERE e.course_id IS NULL;
