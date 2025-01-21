@@ -1,0 +1,126 @@
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| studentmanagement  |
+| sys                |
+| world              |
++--------------------+
+7 rows in set (1.24 sec)
+
+
+mysql> use studentmanagement;
+Database changed
+mysql> show tables;
++-----------------------------+
+| Tables_in_studentmanagement |
++-----------------------------+
+| courses                     |
+| enrolments                  |
+| student                     |
+| students                    |
++-----------------------------+
+4 rows in set (0.17 sec)
+
+mysql> CREATE TABLE STUDENTSS(
+    -> StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(50),
+    -> MATHSCORE INT,
+    -> ENGLISHSCORE INT,
+    -> SCIENCESCORE INT);
+Query OK, 0 rows affected (1.69 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(101,'HIMANSHU',78,69,87);
+Query OK, 1 row affected (0.41 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(102,'KAMLESH',87,75,91);
+Query OK, 1 row affected (0.10 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(103,'SANDEEP',65,73,88);
+Query OK, 1 row affected (0.07 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(104,'KARAN',89,94,80);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(105,'VIDYA',78,90,65);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(106,'SUMAN',58,76,70);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(107,'AKSHAY',58,75,69);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(108,'ANCHAL',79,89,62);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(109,'PANKAJ',85,73,90);
+Query OK, 1 row affected (0.06 sec)
+
+mysql> INSERT INTO STUDENTSS VALUES(110,'SAKSHI',85,93,90);
+Query OK, 1 row affected (0.03 sec)
+
+mysql> SELECT * FROM STUDENTSS;
++-----------+----------+-----------+--------------+--------------+
+| StudentID | NAME     | MATHSCORE | ENGLISHSCORE | SCIENCESCORE |
++-----------+----------+-----------+--------------+--------------+
+|       101 | HIMANSHU |        78 |           69 |           87 |
+|       102 | KAMLESH  |        87 |           75 |           91 |
+|       103 | SANDEEP  |        65 |           73 |           88 |
+|       104 | KARAN    |        89 |           94 |           80 |
+|       105 | VIDYA    |        78 |           90 |           65 |
+|       106 | SUMAN    |        58 |           76 |           70 |
+|       107 | AKSHAY   |        58 |           75 |           69 |
+|       108 | ANCHAL   |        79 |           89 |           62 |
+|       109 | PANKAJ   |        85 |           73 |           90 |
+|       110 | SAKSHI   |        85 |           93 |           90 |
++-----------+----------+-----------+--------------+--------------+
+10 rows in set (0.04 sec)
+
+	Q.1)
+mysql> SELECT STUDENTID,
+    -> NAME,
+    -> MATHSCORE + ENGLISHSCORE + SCIENCESCORE AS TOTALMARKS,
+    -> RANK() OVER (ORDER BY MATHSCORE + ENGLISHSCORE + SCIENCESCORE DESC) As Ranks
+    -> FROM STUDENTSS;
++-----------+----------+------------+-------+
+| STUDENTID | NAME     | TOTALMARKS | Ranks |
++-----------+----------+------------+-------+
+|       110 | SAKSHI   |        268 |     1 |
+|       104 | KARAN    |        263 |     2 |
+|       102 | KAMLESH  |        253 |     3 |
+|       109 | PANKAJ   |        248 |     4 |
+|       101 | HIMANSHU |        234 |     5 |
+|       105 | VIDYA    |        233 |     6 |
+|       108 | ANCHAL   |        230 |     7 |
+|       103 | SANDEEP  |        226 |     8 |
+|       106 | SUMAN    |        204 |     9 |
+|       107 | AKSHAY   |        202 |    10 |
++-----------+----------+------------+-------+
+10 rows in set (0.09 sec)
+
+Q.2) 
+mysql> SELECT STUDENTID,
+    -> NAME,
+    -> MATHSCORE,
+    -> SUM(MATHSCORE) OVER (ORDER BY STUDENTID) AS OVERALLTOTAL
+    -> FROM STUDENTSS;
++-----------+----------+-----------+--------------+
+| STUDENTID | NAME     | MATHSCORE | OVERALLTOTAL |
++-----------+----------+-----------+--------------+
+|       101 | HIMANSHU |        78 |           78 |
+|       102 | KAMLESH  |        87 |          165 |
+|       103 | SANDEEP  |        65 |          230 |
+|       104 | KARAN    |        89 |          319 |
+|       105 | VIDYA    |        78 |          397 |
+|       106 | SUMAN    |        58 |          455 |
+|       107 | AKSHAY   |        58 |          513 |
+|       108 | ANCHAL   |        79 |          592 |
+|       109 | PANKAJ   |        85 |          677 |
+|       110 | SAKSHI   |        85 |          762 |
++-----------+----------+-----------+--------------+
+10 rows in set (0.11 sec)
