@@ -1,0 +1,323 @@
+mysql> create Database schooldb;
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| schooldb           |
+| studentmanagement  |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use schooldb;
+Database changed
+
+
+mysql> CREATE TABLE STUDENT(
+    -> StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(20),
+    -> MATHSCORE INT,
+    -> ENGLISHSCORE INT,
+    -> SCIENCESCORE INT);
+Query OK, 0 rows affected (1.69 sec)
+
+mysql> desc student;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| STUDENTID    | int         | NO   | PRI | NULL    | auto_increment |
+| NAME         | varchar(20) | YES  |     | NULL    |                |
+| MathScore    | int         | YES  |     | NULL    |                |
+| EnglishScore | int         | YES  |     | NULL    |                |
+| ScienceScore | int         | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.29 sec)
+
+
+//INSERT 7 Records
+mysql> select * from student;
++-----------+--------+-----------+--------------+--------------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore |
++-----------+--------+-----------+--------------+--------------+
+|         1 | PINKY  |        79 |           98 |           69 |
+|         2 | SAM    |        78 |           65 |           69 |
+|         3 | MUKESH |        70 |           90 |           83 |
+|         4 | SHWETA |        85 |           76 |           59 |
+|         5 | SURESH |        84 |           74 |           69 |
+|         6 | HARRY  |        67 |           63 |           89 |
+|         7 | ALOK   |        69 |           89 |           59 |
++-----------+--------+-----------+--------------+--------------+
+7 rows in set (0.04 sec)
+
+
+
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore |
++-----------+--------+-----------+--------------+--------------+
+|         1 | PINKY  |        79 |           98 |           69 |
+|         2 | SAM    |        78 |           65 |           69 |
+|         3 | MUKESH |        70 |           90 |           83 |
+|         4 | SHWETA |        85 |           76 |           59 |
+|         5 | SURESH |        84 |           74 |           69 |
+|         6 | HARRY  |        67 |           63 |           89 |
+|         7 | ALOK   |        69 |           89 |           59 |
++-----------+--------+-----------+--------------+--------------+
+7 rows in set (0.43 sec)
+
+mysql> ALTER TABLE STUDENT
+    -> ADD CITY VARCHAR(20);
+Query OK, 0 rows affected (1.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | CITY |
++-----------+--------+-----------+--------------+--------------+------+
+|         1 | PINKY  |        79 |           98 |           69 | NULL |
+|         2 | SAM    |        78 |           65 |           69 | NULL |
+|         3 | MUKESH |        70 |           90 |           83 | NULL |
+|         4 | SHWETA |        85 |           76 |           59 | NULL |
+|         5 | SURESH |        84 |           74 |           69 | NULL |
+|         6 | HARRY  |        67 |           63 |           89 | NULL |
+|         7 | ALOK   |        69 |           89 |           59 | NULL |
++-----------+--------+-----------+--------------+--------------+------+
+7 rows in set (0.00 sec)
+
+
+mysql> DESC STUDENT;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| STUDENTID    | int         | NO   | PRI | NULL    | auto_increment |
+| NAME         | varchar(20) | YES  |     | NULL    |                |
+| MathScore    | int         | YES  |     | NULL    |                |
+| EnglishScore | int         | YES  |     | NULL    |                |
+| ScienceScore | int         | YES  |     | NULL    |                |
+| CITY         | varchar(20) | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+6 rows in set (0.12 sec)
+
+mysql> UPDATE STUDENT
+    -> SET CITY = 'MUMBAI';
+Query OK, 7 rows affected (0.11 sec)
+Rows matched: 7  Changed: 7  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+--------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | CITY   |
++-----------+--------+-----------+--------------+--------------+--------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI |
+|         2 | SAM    |        78 |           65 |           69 | MUMBAI |
+|         3 | MUKESH |        70 |           90 |           83 | MUMBAI |
+|         4 | SHWETA |        85 |           76 |           59 | MUMBAI |
+|         5 | SURESH |        84 |           74 |           69 | MUMBAI |
+|         6 | HARRY  |        67 |           63 |           89 | MUMBAI |
+|         7 | ALOK   |        69 |           89 |           59 | MUMBAI |
++-----------+--------+-----------+--------------+--------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT
+    -> DROP COLUMN CITY;
+Query OK, 0 rows affected (0.28 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore |
++-----------+--------+-----------+--------------+--------------+
+|         1 | PINKY  |        79 |           98 |           69 |
+|         2 | SAM    |        78 |           65 |           69 |
+|         3 | MUKESH |        70 |           90 |           83 |
+|         4 | SHWETA |        85 |           76 |           59 |
+|         5 | SURESH |        84 |           74 |           69 |
+|         6 | HARRY  |        67 |           63 |           89 |
+|         7 | ALOK   |        69 |           89 |           59 |
++-----------+--------+-----------+--------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT
+    -> ADD CITY VARCHAR(20);
+Query OK, 0 rows affected (0.20 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | CITY |
++-----------+--------+-----------+--------------+--------------+------+
+|         1 | PINKY  |        79 |           98 |           69 | NULL |
+|         2 | SAM    |        78 |           65 |           69 | NULL |
+|         3 | MUKESH |        70 |           90 |           83 | NULL |
+|         4 | SHWETA |        85 |           76 |           59 | NULL |
+|         5 | SURESH |        84 |           74 |           69 | NULL |
+|         6 | HARRY  |        67 |           63 |           89 | NULL |
+|         7 | ALOK   |        69 |           89 |           59 | NULL |
++-----------+--------+-----------+--------------+--------------+------+
+7 rows in set (0.00 sec)
+
+
+mysql> UPDATE STUDENT
+    -> SET CITY = 'MUMBAI'
+    -> WHERE STUDENTID=1;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+--------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | CITY   |
++-----------+--------+-----------+--------------+--------------+--------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI |
+|         2 | SAM    |        78 |           65 |           69 | NULL   |
+|         3 | MUKESH |        70 |           90 |           83 | NULL   |
+|         4 | SHWETA |        85 |           76 |           59 | NULL   |
+|         5 | SURESH |        84 |           74 |           69 | NULL   |
+|         6 | HARRY  |        67 |           63 |           89 | NULL   |
+|         7 | ALOK   |        69 |           89 |           59 | NULL   |
++-----------+--------+-----------+--------------+--------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> UPDATE STUDENT
+    -> SET CITY = 'PUNE'
+    -> WHERE STUDENTID=2;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+--------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | CITY   |
++-----------+--------+-----------+--------------+--------------+--------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI |
+|         2 | SAM    |        78 |           65 |           69 | PUNE   |
+|         3 | MUKESH |        70 |           90 |           83 | NULL   |
+|         4 | SHWETA |        85 |           76 |           59 | NULL   |
+|         5 | SURESH |        84 |           74 |           69 | NULL   |
+|         6 | HARRY  |        67 |           63 |           89 | NULL   |
+|         7 | ALOK   |        69 |           89 |           59 | NULL   |
++-----------+--------+-----------+--------------+--------------+--------+
+7 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT
+    -> RENAME COLUMN CITY TO COUNTRY;
+Query OK, 0 rows affected (0.15 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
+|         6 | HARRY  |        67 |           63 |           89 | NULL    |
+|         7 | ALOK   |        69 |           89 |           59 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+7 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUDENT
+    -> WHERE MATHSCORE<70 AND ENGLISHSCORE>80;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
+|         6 | HARRY  |        67 |           63 |           89 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
+|         6 | HARRY  |        67 |           63 |           89 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+6 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUDENT
+    -> WHERE MATHSCORE<70 ;
+Query OK, 1 row affected (0.08 sec)
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        79 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE STUDENT
+    -> SET MATHSCORE=90
+    -> WHERE STUDENTID=1;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        90 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> DELETE FROM STUDENT
+    -> WHERE COUNTRY=NULL;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+---------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore | COUNTRY |
++-----------+--------+-----------+--------------+--------------+---------+
+|         1 | PINKY  |        90 |           98 |           69 | MUMBAI  |
+|         2 | SAM    |        78 |           65 |           69 | PUNE    |
+|         3 | MUKESH |        70 |           90 |           83 | NULL    |
+|         4 | SHWETA |        85 |           76 |           59 | NULL    |
+|         5 | SURESH |        84 |           74 |           69 | NULL    |
++-----------+--------+-----------+--------------+--------------+---------+
+5 rows in set (0.00 sec)
+
+
+mysql> ALTER TABLE STUDENT
+    -> DROP COLUMN COUNTRY;
+Query OK, 0 rows affected (0.19 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++-----------+--------+-----------+--------------+--------------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore |
++-----------+--------+-----------+--------------+--------------+
+|         1 | PINKY  |        90 |           98 |           69 |
+|         2 | SAM    |        78 |           65 |           69 |
+|         3 | MUKESH |        70 |           90 |           83 |
+|         4 | SHWETA |        85 |           76 |           59 |
+|         5 | SURESH |        84 |           74 |           69 |
++-----------+--------+-----------+--------------+--------------+
+5 rows in set (0.00 sec)
+
+mysql>
