@@ -1,0 +1,132 @@
+
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.40 MySQL Community Server - GPL
+
+mysql> create Database schooldb;
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sakila             |
+| schooldb           |
+| studentmanagement  |
+| sys                |
+| world              |
++--------------------+
+8 rows in set (0.00 sec)
+
+mysql> use schooldb;
+Database changed
+
+
+mysql> CREATE TABLE STUDENT(
+    -> StudentID INT AUTO_INCREMENT PRIMARY KEY,
+    -> NAME VARCHAR(20),
+    -> MATHSCORE INT,
+    -> ENGLISHSCORE INT,
+    -> SCIENCESCORE INT);
+Query OK, 0 rows affected (1.69 sec)
+
+mysql> desc student;
++--------------+-------------+------+-----+---------+----------------+
+| Field        | Type        | Null | Key | Default | Extra          |
++--------------+-------------+------+-----+---------+----------------+
+| STUDENTID    | int         | NO   | PRI | NULL    | auto_increment |
+| NAME         | varchar(20) | YES  |     | NULL    |                |
+| MathScore    | int         | YES  |     | NULL    |                |
+| EnglishScore | int         | YES  |     | NULL    |                |
+| ScienceScore | int         | YES  |     | NULL    |                |
++--------------+-------------+------+-----+---------+----------------+
+5 rows in set (0.29 sec)
+
+
+//INSERT 7 Records
+mysql> select * from student;
++-----------+--------+-----------+--------------+--------------+
+| STUDENTID | NAME   | MathScore | EnglishScore | ScienceScore |
++-----------+--------+-----------+--------------+--------------+
+|         1 | PINKY  |        79 |           98 |           69 |
+|         2 | SAM    |        78 |           65 |           69 |
+|         3 | MUKESH |        70 |           90 |           83 |
+|         4 | SHWETA |        85 |           76 |           59 |
+|         5 | SURESH |        84 |           74 |           69 |
+|         6 | HARRY  |        67 |           63 |           89 |
+|         7 | ALOK   |        69 |           89 |           59 |
++-----------+--------+-----------+--------------+--------------+
+7 rows in set (0.04 sec)
+
+Q.1) 
+
+mysql> Select StudentID,
+    -> Name,
+    -> MathScore + EnglishScore + ScienceScore AS TotalMarks,
+    -> CASE
+    ->    WHEN (MathScore + EnglishScore + ScienceScore) >= 280 THEN 'A'
+    ->    WHEN (MathScore + EnglishScore + ScienceScore) >= 250 THEN 'B'
+    ->    WHEN (MathScore + EnglishScore + ScienceScore) >= 200 THEN 'C'
+    ->    ELSE 'D'
+    -> END
+    -> From Student;
+
+OUTPUT:
++-----------+--------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| StudentID | Name   | TotalMarks | CASE
+   WHEN (MathScore + EnglishScore + ScienceScore) >= 280 THEN 'A'
+   WHEN (MathScore + EnglishScore + ScienceScore) >= 250 THEN 'B'
+   WHEN (MathScore + EnglishScore + ScienceScore) >= 200 THEN 'C'
+   ELSE 'D'
+END |
++-----------+--------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|         1 | PINKY  |        246 | C                                                                                                                                                                                                                             |
+|         2 | SAM    |        212 | C                                                                                                                                                                                                                             |
+|         3 | MUKESH |        243 | C                                                                                                                                                                                                                             |
+|         4 | SHWETA |        220 | C                                                                                                                                                                                                                             |
+|         5 | SURESH |        227 | C                                                                                                                                                                                                                             |
+|         6 | HARRY  |        219 | C                                                                                                                                                                                                                             |
+|         7 | ALOK   |        217 | C                                                                                                                                                                                                                             |
++-----------+--------+------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+7 rows in set (0.00 sec)
+
+
+Q.2)  
+
+mysql> SELECT
+    -> StudentID,
+    -> Name,
+    -> MathScore,
+    -> CASE
+    ->    WHEN MathScore >= 60 THEN 'Pass'
+    ->    ELSE 'Fail'
+    -> END AS MathMarks,
+    -> EnglishScore,
+    -> CASE
+    ->    WHEN EnglishScore >= 60 THEN 'Pass'
+    -> END AS EnglishMarks,
+    -> ScienceScore,
+    -> CASE
+    ->    WHEN ScienceScore >= 60 THEN 'Pass'
+    ->    ELSE 'Fail'
+    -> END AS ScienceMarks
+    -> From Student;
+
+OUTPUT: 
+
++-----------+--------+-----------+-----------+--------------+--------------+--------------+--------------+
+| StudentID | Name   | MathScore | MathMarks | EnglishScore | EnglishMarks | ScienceScore | ScienceMarks |
++-----------+--------+-----------+-----------+--------------+--------------+--------------+--------------+
+|         1 | PINKY  |        79 | Pass      |           98 | Pass         |           69 | Pass         |
+|         2 | SAM    |        78 | Pass      |           65 | Pass         |           69 | Pass         |
+|         3 | MUKESH |        70 | Pass      |           90 | Pass         |           83 | Pass         |
+|         4 | SHWETA |        85 | Pass      |           76 | Pass         |           59 | Fail         |
+|         5 | SURESH |        84 | Pass      |           74 | Pass         |           69 | Pass         |
+|         6 | HARRY  |        67 | Pass      |           63 | Pass         |           89 | Pass         |
+|         7 | ALOK   |        69 | Pass      |           89 | Pass         |           59 | Fail         |
++-----------+--------+-----------+-----------+--------------+--------------+--------------+--------------+
+7 rows in set (0.00 sec)
+
+mysql>
