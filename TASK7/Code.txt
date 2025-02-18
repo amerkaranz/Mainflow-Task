@@ -1,0 +1,72 @@
+mysql> SELECT * FROM students;
++---------+-----------+
+| Name    | STUDENTID |
++---------+-----------+
+| SAM     |         1 |
+| BILLING |         2 |
+| CHRIS   |         3 |
+| GAYLE   |         4 |
+| PATEL   |         5 |
+| AKSHAY  |         6 |
++---------+-----------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM SCORE;
++---------+--------+-----------+
+| SUBJECT | SCORES | STUDENTID |
++---------+--------+-----------+
+| ENGLISH |     96 |         1 |
+| MATHS   |     85 |         2 |
+| SCIENCE |     80 |         3 |
+| HISTORY |     75 |         4 |
+| PYTHON  |     79 |         5 |
+| C++     |     82 |         6 |
+| JAVA    |     73 |         7 |
++---------+--------+-----------+
+7 rows in set (0.00 sec)
+
+
+
+
+Q1.
+mysql> CREATE VIEW Studentss_score AS
+    -> SELECT s.studentid,s.name,sc.subject,sc.scores
+    -> FROM Students s
+    -> JOIN score sc ON s.studentid=sc.studentid;
+Query OK, 0 rows affected (0.14 sec)
+
+
+Q2.
+mysql> CREATE VIEW passsed_students AS
+    -> SELECT studentid,name
+    -> FROM Students
+    -> WHERE studentid NOT IN(
+    ->  SELECT Studentid FROM Score Where scores < 75
+    -> );
+Query OK, 0 rows affected (0.09 sec)
+
+mysql> SELECT * FROM passsed_students;
++-----------+---------+
+| studentid | name    |
++-----------+---------+
+|         1 | SAM     |
+|         2 | BILLING |
+|         3 | CHRIS   |
+|         4 | GAYLE   |
+|         5 | PATEL   |
+|         6 | AKSHAY  |
++-----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT * FROM studentss_score;
++-----------+---------+---------+--------+
+| studentid | name    | subject | scores |
++-----------+---------+---------+--------+
+|         1 | SAM     | ENGLISH |     96 |
+|         2 | BILLING | MATHS   |     85 |
+|         3 | CHRIS   | SCIENCE |     80 |
+|         4 | GAYLE   | HISTORY |     75 |
+|         5 | PATEL   | PYTHON  |     79 |
+|         6 | AKSHAY  | C++     |     82 |
++-----------+---------+---------+--------+
+6 rows in set (0.00 sec)
